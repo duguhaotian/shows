@@ -182,6 +182,14 @@ h1 {
   background: var(--card);
 }
 
+body.reviewed .actions {
+  position: static;
+}
+
+body.reviewed .app {
+  padding-bottom: 32px;
+}
+
 .meta { color: var(--muted); margin: 0; }
 
 .questions { list-style: none; padding: 0; margin: 14px 0 0; }

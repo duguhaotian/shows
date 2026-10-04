@@ -255,6 +255,7 @@
     result.replaceChildren();
     sheet.classList.remove("hidden");
     keypad.classList.remove("hidden");
+    document.body.classList.remove("reviewed");
     sheet.scrollIntoView({ behavior: "smooth", block: "start" });
     var first = list.querySelector("input");
     if (first) first.focus();
@@ -297,6 +298,8 @@
     });
     state.checked = true;
     clearInterval(timerId);
+    keypad.classList.add("hidden");
+    document.body.classList.add("reviewed");
     var seconds = Math.max(0, Math.round((Date.now() - state.startedAt) / 1000));
     stats.record({
       at: Date.now(),
