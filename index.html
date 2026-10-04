@@ -16,7 +16,7 @@
       <div>
         <p class="eyebrow">小学数学 · 每天一页</p>
         <h1>二年级口算练习</h1>
-        <p class="lede">100 以内加减、表内乘除、有余数除法。做完就能核对，也可以直接打印。</p>
+        <p class="lede">100 以内加减、表内乘除、有余数除法。做完就能核对，练习分析会记下正确率、用时和薄弱题型。</p>
       </div>
     </header>
 
@@ -30,6 +30,14 @@
         </div>
         <button class="primary" id="start" type="button">开始练习</button>
       </div>
+    </section>
+
+    <section class="panel no-print" id="analysis" aria-labelledby="analysis-title">
+      <div class="sheet-head">
+        <h2 id="analysis-title">练习分析</h2>
+        <button class="ghost" id="clear-stats" type="button">清空记录</button>
+      </div>
+      <div id="analysis-body"></div>
     </section>
 
     <section class="panel hidden" id="sheet" aria-live="polite">
@@ -63,6 +71,7 @@
   </div>
 
   <script src="js/practice.js"></script>
+  <script src="js/stats.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

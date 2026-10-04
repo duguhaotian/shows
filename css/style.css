@@ -254,6 +254,124 @@ h1 {
   margin: 0;
 }
 
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.stat-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+}
+
+.stat-card strong {
+  display: block;
+  font-size: 1.45rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-card span {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.insight {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #fff6f2;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr 3.2rem;
+  gap: 8px;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.bar-track {
+  height: 10px;
+  background: #f0e6d6;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--good);
+  border-radius: inherit;
+}
+
+.bar-fill.weak { background: var(--stamp); }
+
+.bar-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.trend {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 10px;
+  height: 96px;
+  margin: 8px 0 0;
+}
+
+.trend-col {
+  flex: 0 0 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.trend-track {
+  width: 100%;
+  max-width: 28px;
+  height: 72px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.trend-bar {
+  display: block;
+  width: 100%;
+  background: var(--stamp);
+  border-radius: 6px 6px 2px 2px;
+}
+
+.history {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+}
+
+.history li {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr 3.4rem 6.8rem;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px dashed var(--line);
+  font-variant-numeric: tabular-nums;
+}
+
+.subhead {
+  margin: 16px 0 0;
+  font-size: 0.95rem;
+}
+
 .keypad {
   position: fixed;
   left: 0;
@@ -288,6 +406,8 @@ h1 {
   .answer, .blank { width: 3.2rem; font-size: 1.15rem; }
   .keypad { grid-template-columns: repeat(6, 1fr); }
   .actions { bottom: 128px; }
+  .bar-row { grid-template-columns: 6.2rem 1fr 2.6rem; }
+  .history li { grid-template-columns: 1fr 1fr; }
 }
 
 @media print {

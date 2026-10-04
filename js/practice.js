@@ -141,12 +141,14 @@
 
   var MIX_IDS = ["add100", "sub100", "mix100", "mul", "div", "rem", "mulmix"];
 
-  function makeOne(topicId) {
-    if (topicId === "mixall") return GENERATORS[pick(MIX_IDS)]();
-    var gen = GENERATORS[topicId];
-    if (!gen) throw new Error("未知题型：" + topicId);
-    return gen();
-  }
+function makeOne(topicId) {
+  var kind = topicId === "mixall" ? pick(MIX_IDS) : topicId;
+  var gen = GENERATORS[kind];
+  if (!gen) throw new Error("未知题型：" + topicId);
+  var item = gen();
+  item.kind = kind;
+  return item;
+}
 
   function generateSet(topicId, count) {
     var n = count | 0;
@@ -188,6 +190,7 @@
 
   root.Practice = {
     TOPICS: TOPICS,
+    SKILL_IDS: MIX_IDS,
     generateSet: generateSet,
     parseAnswer: parseAnswer,
     isCorrect: isCorrect

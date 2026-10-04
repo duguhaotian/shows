@@ -35,6 +35,8 @@ function sample(topic, count) {
     const prompts = new Set(items.map((item) => item.prompt));
     assert.strictEqual(prompts.size, count);
     items.forEach((item) => {
+      assert.ok(Practice.SKILL_IDS.includes(item.kind));
+      if (topic !== "mixall") assert.strictEqual(item.kind, topic);
       evalPrompt(item.prompt, item.fields);
       item.fields.forEach((field) => {
         assert.ok(Number.isInteger(field.answer));
