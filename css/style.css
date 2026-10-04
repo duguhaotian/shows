@@ -36,7 +36,7 @@ button, input { font: inherit; }
 .app {
   width: min(920px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 28px 0 120px;
+  padding: 28px 0 180px;
 }
 
 .masthead {
@@ -162,12 +162,24 @@ h1 {
 
 .primary:hover, .ghost:hover, .topic:hover { filter: brightness(0.98); }
 
-.sheet-head, .result-row, .actions {
+.sheet-head, .result-row {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
   justify-content: space-between;
+}
+
+.actions {
+  position: sticky;
+  bottom: 132px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 8px 0;
+  background: var(--card);
 }
 
 .meta { color: var(--muted); margin: 0; }
@@ -191,10 +203,17 @@ h1 {
 .expr {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 8px 12px;
   align-items: center;
-  font-size: 1.35rem;
+  font-size: 1.28rem;
   font-variant-numeric: tabular-nums;
+}
+
+.pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
 }
 
 .answer, .blank {
@@ -265,8 +284,10 @@ h1 {
 .hidden { display: none !important; }
 
 @media (max-width: 640px) {
-  .expr { font-size: 1.2rem; }
+  .expr { font-size: 1.08rem; }
+  .answer, .blank { width: 3.2rem; font-size: 1.15rem; }
   .keypad { grid-template-columns: repeat(6, 1fr); }
+  .actions { bottom: 128px; }
 }
 
 @media print {

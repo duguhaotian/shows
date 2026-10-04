@@ -23,6 +23,7 @@
   var againBtn = document.querySelector("#again");
   var printBtn = document.querySelector("#print");
   var keypad = document.querySelector("#keypad");
+  var timerId = 0;
 
   practice.TOPICS.forEach(function (topic) {
     var button = document.createElement("button");
@@ -94,11 +95,13 @@
       prompt.textContent = item.prompt + " =";
       expr.append(prompt);
       item.fields.forEach(function (field, fieldIndex) {
+        var group = document.createElement("span");
+        group.className = "pair";
         if (field.label) {
           var label = document.createElement("span");
           label.className = "field-label";
           label.textContent = field.label;
-          expr.append(label);
+          group.append(label);
         }
         var input = document.createElement("input");
         input.className = "answer";
@@ -109,12 +112,8 @@
         input.dataset.field = String(fieldIndex);
         input.addEventListener("focus", function () { state.active = input; });
         input.addEventListener("keydown", onKeydown);
-        expr.append(input);
-        if (item.fields.length === 2 && fieldIndex === 0) {
-          var dots = document.createElement("span");
-          dots.textContent = "……";
-          expr.append(dots);
-        }
+        group.append(input);
+        expr.append(group);
       });
       var mark = document.createElement("span");
       mark.className = "mark";
@@ -123,12 +122,16 @@
       list.append(row);
     });
     title.textContent = topicName(state.topicId);
-    timer.textContent = "计时从现在开始";
+    state.checked = false;
+    clearInterval(timerId);
+    timer.textContent = "用时 0 分 00 秒";
+    timerId = setInterval(function () {
+      if (!state.checked) timer.textContent = "用时 " + elapsedText();
+    }, 1000);
     result.classList.add("hidden");
     result.replaceChildren();
     sheet.classList.remove("hidden");
     keypad.classList.remove("hidden");
-    state.checked = false;
     sheet.scrollIntoView({ behavior: "smooth", block: "start" });
     var first = list.querySelector("input");
     if (first) first.focus();
@@ -164,6 +167,7 @@
       inputs.forEach(function (input) { input.readOnly = true; });
     });
     state.checked = true;
+    clearInterval(timerId);
     var score = document.createElement("p");
     score.className = "score";
     score.textContent = "做对 " + correct + " / " + state.items.length;
