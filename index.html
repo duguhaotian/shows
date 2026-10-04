@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="小学二年级口算练习：100以内加减、表内乘除、有余数除法和乘加乘减。" />
+  <meta name="theme-color" content="#f4efe4" />
+  <title>二年级口算练习</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='none' stroke='%23c24532' stroke-width='4'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-size='22' fill='%23c24532' font-family='sans-serif'%3E算%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="masthead">
+      <div class="seal" aria-hidden="true">口算</div>
+      <div>
+        <p class="eyebrow">小学数学 · 每天一页</p>
+        <h1>二年级口算练习</h1>
+        <p class="lede">100 以内加减、表内乘除、有余数除法。做完就能核对，也可以直接打印。</p>
+      </div>
+    </header>
+
+    <section class="panel setup" aria-label="选题">
+      <h2>今天练什么</h2>
+      <div class="topics" id="topics"></div>
+      <div class="controls">
+        <div>
+          <div class="meta">题量</div>
+          <div class="counts" id="counts"></div>
+        </div>
+        <button class="primary" id="start" type="button">开始练习</button>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="sheet" aria-live="polite">
+      <div class="sheet-head">
+        <h2 id="sheet-title">练习</h2>
+        <p class="meta" id="timer"></p>
+      </div>
+      <ol class="questions" id="questions"></ol>
+      <div class="result hidden" id="result"></div>
+      <div class="actions no-print">
+        <button class="primary" id="check" type="button">检查答案</button>
+        <button class="ghost" id="again" type="button">再来一组</button>
+        <button class="ghost" id="print" type="button">打印</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="keypad hidden" id="keypad" aria-label="数字键盘">
+    <button type="button" data-key="1">1</button>
+    <button type="button" data-key="2">2</button>
+    <button type="button" data-key="3">3</button>
+    <button type="button" data-key="4">4</button>
+    <button type="button" data-key="5">5</button>
+    <button type="button" data-key="6">6</button>
+    <button type="button" data-key="7">7</button>
+    <button type="button" data-key="8">8</button>
+    <button type="button" data-key="9">9</button>
+    <button type="button" data-key="0">0</button>
+    <button type="button" data-key="del">删</button>
+    <button type="button" data-key="next">下一个</button>
+  </div>
+
+  <script src="js/practice.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
