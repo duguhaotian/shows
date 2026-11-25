@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>设定 Codex Goal：让证据决定何时完成 · AI Agent 每日精读</title><style>:root{color-scheme:light;--ink:#172b38;--muted:#526571;--accent:#086b66}*{box-sizing:border-box}body{margin:0;background:#f4f5f1;color:var(--ink);font:17px/1.8 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}main{max-width:850px;margin:40px auto;padding:36px;background:white;border-top:6px solid var(--accent)}h1{font-size:2rem;line-height:1.35}h2{margin-top:2em;font-size:1.25rem}a{color:var(--accent);overflow-wrap:anywhere}.meta,footer{color:var(--muted);font-size:.9rem}.takeaway{padding:20px;background:#eaf4f1;border-left:4px solid var(--accent)}li{margin:.5em 0}code{background:#edf0ef;padding:.15em .3em}footer{margin-top:40px;border-top:1px solid #ddd;padding-top:16px}@media(max-width:600px){main{margin:0;padding:24px}h1{font-size:1.6rem}}@media print{body{background:white}main{margin:0;border:0;max-width:none}}.diagram{margin:1em 0;padding:1rem;border:1px solid #bdcfca;border-radius:8px;background:#f5faf8}.diagram ol{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}.diagram li{position:relative;margin:0;padding:.65rem;background:white;border:1px solid #bdcfca;border-radius:6px}.diagram .arrow{color:var(--accent);font-weight:700;position:absolute;right:-1.25rem;top:50%;transform:translateY(-50%)}.diagram .arrow-down{display:none}.diagram figcaption{margin-top:.75rem;font-size:.9rem;color:var(--muted)}@media(max-width:620px){.diagram ol{grid-template-columns:1fr}.diagram .arrow{left:50%;right:auto;top:auto;bottom:-1.45rem;transform:translateX(-50%)}.diagram .arrow-right{display:none}.diagram .arrow-down{display:inline}}.decision{padding:.75rem;margin:.75rem 0 0;background:#eaf4f1;border-left:4px solid var(--accent)}.decision p{margin:.35rem 0}code{overflow-wrap:anywhere}</style></head>
+<body><main><nav><a href="index.html">← 精读索引</a></nav><header><p class="meta">AI Agent 每日精读 · <time datetime="2026-11-25">2026-11-25</time>（UTC+8） · 模板 v1.3</p><h1>设定 Codex Goal：让证据决定何时完成</h1></header>
+<section><h2>文章元信息</h2><p>原文：<a href="https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex">Using Goals in Codex</a>；作者：Raj Pathak、Stefano Fabbri（OpenAI）；发布日期：2026-05-09。标签：多轮续跑、研究验收、定时任务。</p></section>
+<p class="takeaway"><strong>一句话结论：</strong>路径不确定、但完成标准可验证的任务，适合交给 Codex Goal 跨轮推进；每天几点启动、报告能否发布，仍由外层流程决定。</p>
+<section><h2>核心技术点 / 核心思路</h2><ul>
+<li><strong>目标是会话持久状态。</strong>Objective、生命周期、预算和进度附在当前线程，不推广到其他线程。线程空闲、没有待处理工作或排队的用户输入、目标仍激活且未耗尽预算，才有机会自动继续。纯计划不触发续跑；若续跑轮没有调用工具，系统会抑制下一次自动续跑，防止空转。</li>
+<li><strong>先定验收依据，再选择下一步。</strong>结束前对照文件、测试、测量日志或原始文献逐项检查；不要把预算到头、获得替代证据或写完报告等同于验证通过。预算用尽时应报告已完成什么、卡在哪里、下一步需要什么。</li>
+<li><strong>延伸判断：</strong>生成器负责把问题做下去，验收器负责核对结果。即使 Goal 标记完成，外层仍可拒绝发布，例如检查发现某个结论缺少可追溯的出处。</li>
+</ul></section>
+<section><h2>流程图：一次定时任务中的证据验收</h2>
+<figure class="diagram" aria-labelledby="goals-flow-caption"><ol aria-label="从定时触发到核对证据">
+<li><strong>1. 外层调度</strong><br>到点启动本期任务，设定范围、预算、验收标准<span class="arrow" aria-hidden="true"><span class="arrow-right">→</span><span class="arrow-down">↓</span></span></li>
+<li><strong>2. 调查与记录</strong><br>核对原始材料，把结论和来源逐条对应<span class="arrow" aria-hidden="true"><span class="arrow-right">→</span><span class="arrow-down">↓</span></span></li>
+<li><strong>3. 对照完成标准</strong><br>检查核心结论有无证据，能否交付</li>
+</ol><div class="decision"><p><strong>达标：</strong>交外层独立核验和发布。</p><p><strong>未达标但还能补证：</strong>若 Goal 在合格的空闲边界且有预算，回到第 2 步；单次任务则由外层决定是否再试。</p><p><strong>缺材料或耗尽预算：</strong>报告阻塞，保留可核实的部分；不把缺证据的草稿当成成品发布。</p></div>
+<figcaption id="goals-flow-caption">基于原文图 1–3 的续跑机制重绘，并加入本文建议的外层调度和独立发布核验。阅读顺序：先触发，随后调查，再按证据决定交付、补查或报告阻塞。</figcaption></figure></section>
+<section><h2>原文要点</h2><p>原文用一项量化论文的复现说明分级验收：可以重建定价和对冲机制，并用重新训练的模型做近似验证，但原始训练路径、随机种子和检查点不可用，无法原样重放训练。图 5–6 支持的做法是记录每条主张、验证途径、证据和剩余不确定性，而不是给整篇论文一个笼统的「已复现」。</p></section>
+<section><h2>实践建议</h2><ol>
+<li><strong>常规日报先用单次任务。</strong>由外部调度启动，选定来源后要求 <code>codex exec</code> 生成草稿和证据清单。独立核验日期、出处、数值单位、基线和测试条件；发布后单独核对可访问的网页。不要把交互式 <code>/goal</code> 当作 <code>codex exec</code> 的调度指令。</li>
+<li><strong>缺证据时，区分补查与阻塞。</strong>示例：草稿写「启动快 3 倍」，原文只给方案耗时，未给同条件下的基线。能找到原始图表，就回去核对；找不到就删掉倍数，注明能确认的绝对耗时和缺失项。栏目齐全不能替代这一步。</li>
+<li><strong>需要反复试验时才引入 Goal。</strong>典型任务是跑多次性能基准，或把论文主张逐条归类为已核实、近似、证据不足。交互式 Codex 用 <code>/goal</code>；自建集成可参考 App Server 的 <code>thread/goal/set</code>、<code>get</code> 和 <code>clear</code> 接口。设定范围与停止条件，不把重试等同于不限预算。</li>
+</ol><p class="meta">本节是实践建议，未对日报流程做对照实验。参见 <a href="https://learn.chatgpt.com/docs/long-running-work">Codex 长任务文档</a>及 <a href="https://learn.chatgpt.com/docs/app-server#manage-a-thread-goal">App Server：线程目标</a>。</p></section>
+<section><h2>适用边界</h2><p>Goal 适合终点清楚、但下一步由证据决定的任务。短任务、没有可验收终点的工作、固定时间触发任务，都不因加 Goal 而获益。原文是机制说明与案例，不提供对照数据来判断它比一次性运行更便宜或更准确，也没有证明模型自查能替代独立验收。</p></section>
+<section><h2>后续跟进</h2><p>若要验证收益，可用同一批材料、同样的验收规则和预算比较单次任务和 Goal，记录未注明基线的结论数、错误引用数、正确报告的阻塞数，以及每份合格报告的耗时与成本。不仅统计成功产出，还要计入失败和超时。</p></section>
+<footer>来源：<a href="https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex">OpenAI Cookbook</a> · <a href="template.html">精读模板 v1.3</a> · <a href="index.html">归档索引</a></footer></main></body></html>
